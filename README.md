@@ -1,4 +1,4 @@
-**Disclaimer, AI has been used during website creation, I am new to HTML so as I improve I will add new bits without AI**
+**Disclaimer, AI was used for the underlying code, most of it is human written through and will be continued to be written by humans**
 This is the Code for my website that I own, the website showcases all my coding projects on it.
 
 If you would like to request something be added to the website then open a issue with feature request 
