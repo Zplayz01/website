@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to my Website!</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        html, body {
+            height: 100vh;
+            width: 100vw;
+            background-color: #2b2b2b;
+            color: #ffffff;
+            overflow: hidden;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Main content area */
+        .main-content {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 50px;
+            z-index: 5;
+        }
+
+        h1 {
+            font-size: 2.2rem;
+            color: #ffffff;
+            font-weight: 800;
+            text-align: center;
+            user-select: none;
+            margin-bottom: 24px;
+        }
+
+        /* Navigation bar directly below the welcome text */
+        .navbar {
+            display: flex;
+            flex-direction: row;
+            gap: 20px;
+            z-index: 10;
+        }
+
+        /* Identical rectangular buttons with 7px rounded corners */
+        .nav-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            color: #ffffff;
+            font-size: 1rem;
+            font-weight: 600;
+            border: 2px solid #ffffff;
+            background-color: transparent;
+            border-radius: 7px;
+            height: 50px;
+            width: 170px;
+            transition: all 0.2s ease;
+        }
+
+        .nav-btn:hover {
+            background-color: #ffffff;
+            color: #2b2b2b;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
+        }
+
+        /* 3D Scene viewport in the empty space below navigation */
+        .cube-container {
+            width: 100%;
+            flex-grow: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            perspective: 1200px;
+            position: relative;
+        }
+
+        /* Ambient Glow sphere */
+        .glow-sphere {
+            position: absolute;
+            width: 380px;
+            height: 380px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255,255,255,0.25) 0%, rgba(255,0,128,0.2) 40%, rgba(0,255,255,0.15) 70%, rgba(0,0,0,0) 100%);
+            filter: blur(25px);
+            animation: pulseGlow 4s infinite alternate ease-in-out;
+            pointer-events: none;
+        }
+
+        @keyframes pulseGlow {
+            0% { transform: scale(0.9); opacity: 0.6; }
+            100% { transform: scale(1.15); opacity: 1; }
+        }
+
+        /* 3D Cube wrapper */
+        .cube {
+            width: 200px;
+            height: 200px;
+            position: relative;
+            transform-style: preserve-3d;
+            will-change: transform;
+            cursor: pointer;
+        }
+
+        /* Individual Cube Faces */
+        .face {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            border: 3px solid rgba(255, 255, 255, 0.9);
+            border-radius: 16px;
+            backdrop-filter: blur(4px);
+            box-shadow: 0 0 25px rgba(255, 255, 255, 0.3), inset 0 0 20px rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: hueShift 8s infinite linear;
+        }
+
+        /* Rainbow face gradients */
+        .front  { transform: translateZ(100px);  background: linear-gradient(135deg, rgba(255,0,0,0.7), rgba(255,127,0,0.7)); }
+        .back   { transform: rotateY(180deg) translateZ(100px); background: linear-gradient(135deg, rgba(0,0,255,0.7), rgba(139,0,255,0.7)); }
+        .right  { transform: rotateY(90deg) translateZ(100px);  background: linear-gradient(135deg, rgba(255,255,0,0.7), rgba(0,255,0,0.7)); }
+        .left   { transform: rotateY(-90deg) translateZ(100px); background: linear-gradient(135deg, rgba(255,0,128,0.7), rgba(255,0,0,0.7)); }
+        .top    { transform: rotateX(90deg) translateZ(100px);  background: linear-gradient(135deg, rgba(0,255,255,0.7), rgba(0,0,255,0.7)); }
+        .bottom { transform: rotateX(-90deg) translateZ(100px); background: linear-gradient(135deg, rgba(0,255,0,0.7), rgba(0,255,255,0.7)); }
+
+        @keyframes hueShift {
+            0% { filter: hue-rotate(0deg); }
+            100% { filter: hue-rotate(360deg); }
+        }
+
+        /* Cursor particle trail */
+        .particle {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            pointer-events: none;
+            animation: fadeOut 0.8s forwards ease-out;
+        }
+
+        @keyframes fadeOut {
+            0% { opacity: 1; transform: scale(1); }
+            100% { opacity: 0; transform: scale(0.2) translateY(-20px); }
+        }
+    </style>
+</head>
+<body>
+
+    <main class="main-content">
+        <h1>Welcome to my Website!</h1>
+
+        <!-- Updated primary navigation links -->
+        <nav class="navbar">
+            <a href="projects.html" class="nav-btn">Projects</a>
+            <a href="findme.html" class="nav-btn">Find me</a>
+        </nav>
+        
+        <div class="cube-container" id="container">
+            <div class="glow-sphere"></div>
+            <div class="cube" id="rainbowCube">
+                <div class="face front"></div>
+                <div class="face back"></div>
+                <div class="face right"></div>
+                <div class="face left"></div>
+                <div class="face top"></div>
+                <div class="face bottom"></div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        const cube = document.getElementById('rainbowCube');
+        
+        let targetRotateX = 0, targetRotateY = 0;
+        let currentRotateX = 0, currentRotateY = 0;
+        let autoAngleX = 0, autoAngleY = 0;
+
+        window.addEventListener('mousemove', (e) => {
+            const rect = cube.getBoundingClientRect();
+            const cubeCenterX = rect.left + rect.width / 2;
+            const cubeCenterY = rect.top + rect.height / 2;
+
+            const deltaX = e.clientX - cubeCenterX;
+            const deltaY = e.clientY - cubeCenterY;
+
+            targetRotateY = deltaX * 0.35;
+            targetRotateX = -deltaY * 0.35;
+
+            if (Math.random() > 0.4) {
+                createParticle(e.clientX, e.clientY);
+            }
+        });
+
+        function createParticle(x, y) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.left = `${x}px`;
+            particle.style.top = `${y}px`;
+
+            const colors = ['#ff0055', '#00e5ff', '#ffeb3b', '#76ff03', '#d500f9'];
+            const randomColor = colors[Math.floor(Math.random() * colors.length)];
+            particle.style.backgroundColor = randomColor;
+            particle.style.boxShadow = `0 0 8px ${randomColor}`;
+
+            document.body.appendChild(particle);
+
+            setTimeout(() => {
+                particle.remove();
+            }, 800);
+        }
+
+        function animate() {
+            currentRotateX += (targetRotateX - currentRotateX) * 0.08;
+            currentRotateY += (targetRotateY - currentRotateY) * 0.08;
+
+            autoAngleX += 0.3;
+            autoAngleY += 0.5;
+
+            cube.style.transform = `rotateX(${currentRotateX + autoAngleX}deg) rotateY(${currentRotateY + autoAngleY}deg)`;
+
+            requestAnimationFrame(animate);
+        }
+
+        animate();
+    </script>
+
+</body>
+</html>
